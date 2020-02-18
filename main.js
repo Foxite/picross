@@ -1,12 +1,32 @@
-function setup() {
+function forAllCells(callback) {
 	var puzzle = document.getElementById("puzzle");
-	for (var i = 0; i < puzzle.rows.length; i++) {
-		for (var j = 0; j < puzzle.rows[i].cells.length; j++) {
-			if (puzzle.rows[i].cells[j].classList.contains("cell")) {
-				puzzle.rows[i].cells[j].onclick = onCellClick;
-			}
+	for (var i = 1; i < puzzle.rows.length; i++) {
+		for (var j = 1; j < puzzle.rows[i].cells.length; j++) {
+			callback(puzzle.rows[i].cells[j]);
 		}
 	}
+}
+
+function forRow(row, callback) {
+	var puzzle = document.getElementById("puzzle");
+	for (var i = 1; i < puzzle.rows[row].cells.length; i++) {
+		callback(puzzle.rows[row].cells[i]);
+	}
+}
+
+function forColumn(column, callback) {
+	var puzzle = document.getElementById("puzzle");
+	for (var i = 1; i < puzzle.rows.length; i++) {
+		callback(puzzle.rows[i].cells[column]);
+	}
+}
+
+function setup() {
+	forAllCells(function(cell) {
+		if (cell.classList.contains("cell")) {
+			cell.onclick = onCellClick;
+		}
+	});
 }
 
 function onCellClick() {
