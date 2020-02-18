@@ -1,0 +1,44 @@
+#container {
+	font-family: Roboto, sans-serif;
+}
+
+#puzzle {
+	table-layout: fixed;
+}
+
+#puzzle td {
+	width: 2em;
+	height: 2em;
+}
+
+#puzzle .hint.vert {
+	width: 2em;
+	vertical-align: bottom;
+	text-align: center;
+}
+
+#puzzle .hint.horiz {
+	width: 5em;
+	text-align: right;
+	vertical-align: center;
+}
+
+#puzzle .hint.vert .number {
+	display: block;
+}
+
+#puzzle .hint.horiz .number {
+	display: inline;
+}
+
+#puzzle .cell {
+	
+}
+
+#puzzle .cell.empty {
+	background-color: white;
+}
+
+#puzzle .cell.filled {
+	background-color: black;
+}
