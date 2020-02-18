@@ -46,3 +46,12 @@
 #puzzle .cell.marked {
 	background-color: gray;
 }
+
+#puzzle .incorrect {
+	color: red;
+}
+
+#puzzle .crossed {
+	text-decoration: strikethrough;
+	color: grey;
+}

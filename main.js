@@ -1,32 +1,32 @@
+var puzzleWidth = 5;
+var puzzleHeight = 5;
+var puzzle = undefined;
+
+function setup() {
+	puzzle = document.getElementById("puzzle");
+	forAllCells(function(cell) {
+		cell.onclick = onCellClick;
+	});
+}
+
 function forAllCells(callback) {
-	var puzzle = document.getElementById("puzzle");
-	for (var i = 1; i < puzzle.rows.length; i++) {
-		for (var j = 1; j < puzzle.rows[i].cells.length; j++) {
-			callback(puzzle.rows[i].cells[j]);
+	for (let i = 0; i < puzzleWidth; i++) {
+		for (let j = 0; j < puzzleHeight; j++) {
+			callback(puzzle.rows[i + 1].cells[j + 1]);
 		}
 	}
 }
 
 function forRow(row, callback) {
-	var puzzle = document.getElementById("puzzle");
-	for (var i = 1; i < puzzle.rows[row].cells.length; i++) {
-		callback(puzzle.rows[row].cells[i]);
+	for (let i = 0; i < puzzleWidth; i++) {
+		callback(puzzle.rows[row + 1].cells[i + 1]);
 	}
 }
 
 function forColumn(column, callback) {
-	var puzzle = document.getElementById("puzzle");
-	for (var i = 1; i < puzzle.rows.length; i++) {
-		callback(puzzle.rows[i].cells[column]);
+	for (let i = 0; i < puzzleHeight; i++) {
+		callback(puzzle.rows[i + 1].cells[column + 1]);
 	}
-}
-
-function setup() {
-	forAllCells(function(cell) {
-		if (cell.classList.contains("cell")) {
-			cell.onclick = onCellClick;
-		}
-	});
 }
 
 function onCellClick() {
@@ -39,5 +39,47 @@ function onCellClick() {
 	} else if (this.classList.contains("marked")) {
 		this.classList.remove("marked");
 		this.classList.add("empty");
+	}
+	validate();
+}
+
+function validate() {
+	Array.from(puzzle.getElementsByClassName("crossed")).map(function(item) {
+		item.classList.remove("crossed");
+		return 0;
+	});
+	// Validate rows
+	for (let i = 0; i < puzzleHeight; i++) {
+		puzzle.rows[i + 1].cells[0].classList.remove("incorrect");
+		let spec = puzzle.rows[i + 1].cells[0].textContent.split(" ").map(function(item) {
+			return parseInt(item);
+		});
+		let specI = 0;
+		let inSequence = false;
+		forRow(i, function(cell) {
+			if (cell.classList.contains("filled")) {
+				inSequence = true;
+				spec[specI] = spec[specI] - 1;
+				if (spec[specI] < 0) {
+					puzzle.rows[i + 1].cells[0].classList.add("incorrect");
+				}
+			} else {
+				if (inSequence) {
+					if (spec[specI] == 0) {
+						puzzle.rows[i + 1].cells[0].getElementsByClassName("number")[specI].classList.add("crossed");
+					}
+					specI++;
+					inSequence = false;
+				}
+			}
+		});
+		if (spec[spec.length - 1] == 0) {
+			puzzle.rows[i + 1].cells[0].getElementsByClassName("number")[spec.length - 1].classList.add("crossed");
+		}
+	}
+	
+	// Validate columns
+	for (let i = 0; i < puzzleWidth; i++) {
+		
 	}
 }
