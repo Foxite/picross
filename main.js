@@ -1,9 +1,12 @@
-var puzzleWidth = 5;
-var puzzleHeight = 5;
+var puzzleWidth = undefined;
+var puzzleHeight = undefined;
 var puzzle = undefined;
 
 function setup() {
 	puzzle = document.getElementById("puzzle");
+	puzzleWidth = puzzle.rows.length - 1;
+	puzzleHeight = puzzle.rows[0].cells.length - 1;
+	
 	forAllCells(function(cell) {
 		cell.onclick = onCellClick;
 	});
