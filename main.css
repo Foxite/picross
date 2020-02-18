@@ -42,3 +42,7 @@
 #puzzle .cell.filled {
 	background-color: black;
 }
+
+#puzzle .cell.marked {
+	background-color: gray;
+}
