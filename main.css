@@ -1,3 +1,4 @@
+/* Core */
 #container {
 	font-family: Roboto, sans-serif;
 }
@@ -11,6 +12,7 @@
 	height: 2em;
 }
 
+/* Hints */
 #puzzle .hint.vert {
 	width: 2em;
 	vertical-align: bottom;
@@ -31,10 +33,16 @@
 	display: inline;
 }
 
-#puzzle .cell {
-	
+#puzzle .hint.incorrect {
+	color: red;
 }
 
+#puzzle .hint.crossed {
+	text-decoration: strikethrough;
+	color: grey;
+}
+
+/* Cells */
 #puzzle .cell.empty {
 	background-color: white;
 }
@@ -44,14 +52,5 @@
 }
 
 #puzzle .cell.marked {
-	background-color: gray;
-}
-
-#puzzle .incorrect {
-	color: red;
-}
-
-#puzzle .crossed {
-	text-decoration: strikethrough;
-	color: grey;
+	background: url("x.svg") no-repeat center;
 }
