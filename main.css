@@ -21,8 +21,8 @@
 
 #puzzle .hint.horiz {
 	width: 5em;
+	vertical-align: middle;
 	text-align: right;
-	vertical-align: center;
 }
 
 #puzzle .hint.vert .number {
