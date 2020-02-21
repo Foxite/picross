@@ -39,7 +39,7 @@
 
 #puzzle .hint.crossed {
 	text-decoration: strikethrough;
-	color: grey;
+	color: gray;
 }
 
 /* Cells */
