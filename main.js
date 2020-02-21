@@ -81,6 +81,44 @@ function validate() {
 	
 	// Validate columns
 	for (let i = 0; i < puzzleWidth; i++) {
-		
+		puzzle.rows[0].cells[i + 1].classList.remove("incorrect");
+		Array.from(puzzle.rows[0].cells[i + 1].getElementsByClassName("number")).forEach(function(number) {
+			number.classList.remove("crossed");
+		});
+		let spec = puzzle.rows[0].cells[i + 1].textContent.split(" ").map(function(item) {
+			return parseInt(item);
+		});
+		let specI = 0;
+		let inSequence = false;
+		forColumn(i, function(cell) {
+			if (cell.classList.contains("filled")) {
+				if (specI >= spec.length) {
+					puzzle.rows[0].cells[i + 1].classList.add("incorrect");
+				} else {
+					inSequence = true;
+					spec[specI] = spec[specI] - 1;
+					if (spec[specI] < 0) {
+						puzzle.rows[0].cells[i + 1].classList.add("incorrect");
+					}
+				}
+			} else if (inSequence) {
+				if (spec[specI] == 0) {
+					puzzle.rows[0].cells[i + 1].getElementsByClassName("number")[specI].classList.add("crossed");
+				} else {
+					puzzle.rows[0].cells[i + 1].classList.add("incorrect");
+				}
+				specI++;
+				inSequence = false;
+			}
+		});
+		if (puzzle.rows[0].cells[i + 1].classList.contains("incorrect")) {
+			// if it's incorrect, uncross all crossed hints
+			Array.from(puzzle.rows[0].cells[i + 1].getElementsByClassName("number")).forEach(function(number) {
+				number.classList.remove("crossed");
+			});
+		} else if (spec[spec.length - 1] == 0) {
+			// cross off the last hint, it won't get crossed by the code in the loop
+			puzzle.rows[0].cells[i + 1].getElementsByClassName("number")[spec.length - 1].classList.add("crossed");
+		}
 	}
 }
