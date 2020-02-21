@@ -1,24 +1,6 @@
-function CircularArray(array) {
-	this._array = array;
-	this.length = this._array.length;
-	this.contains = this._array.contains;
-	this.get = function(index) {
-		return this._array[((index % this.length) + this.length) % this.length]; // // https://stackoverflow.com/a/4467559
-	}
-	this.set = function(index, item) {
-		this._array[((index % this.length) + this.length) % this.length] = item;
-	}
-}
-
-var puzzleWidth = undefined;
-var puzzleHeight = undefined;
-var puzzle = undefined;
-
 function setup() {
-	puzzle = document.getElementById("puzzle");
-	puzzleWidth = puzzle.rows.length - 1;
-	puzzleHeight = puzzle.rows[0].cells.length - 1;
-	
+	coreSetup(); 
+
 	forAllCells(function(cell) {
 		cell.onclick = function() {
 			rotateCellContent(this, 1);
@@ -28,26 +10,6 @@ function setup() {
 			return false; // prevent context menu
 		};
 	});
-}
-
-function forAllCells(callback) {
-	for (let i = 0; i < puzzleWidth; i++) {
-		for (let j = 0; j < puzzleHeight; j++) {
-			callback(puzzle.rows[i + 1].cells[j + 1]);
-		}
-	}
-}
-
-function forRow(row, callback) {
-	for (let i = 0; i < puzzleWidth; i++) {
-		callback(puzzle.rows[row + 1].cells[i + 1]);
-	}
-}
-
-function forColumn(column, callback) {
-	for (let i = 0; i < puzzleHeight; i++) {
-		callback(puzzle.rows[i + 1].cells[column + 1]);
-	}
 }
 
 function rotateCellContent(element, direction) {
