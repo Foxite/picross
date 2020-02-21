@@ -1,3 +1,15 @@
+function CircularArray(array) {
+	this._array = array;
+	this.length = this._array.length;
+	this.contains = this._array.contains;
+	this.get = function(index) {
+		return this._array[((index % this.length) + this.length) % this.length]; // // https://stackoverflow.com/a/4467559
+	}
+	this.set = function(index, item) {
+		this._array[((index % this.length) + this.length) % this.length] = item;
+	}
+}
+
 var puzzleWidth = undefined;
 var puzzleHeight = undefined;
 var puzzle = undefined;
@@ -8,7 +20,13 @@ function setup() {
 	puzzleHeight = puzzle.rows[0].cells.length - 1;
 	
 	forAllCells(function(cell) {
-		cell.onclick = onCellClick;
+		cell.onclick = function() {
+			rotateCellContent(this, 1);
+		};
+		cell.oncontextmenu = function() {
+			rotateCellContent(this, -1);
+			return false; // prevent context menu
+		};
 	});
 }
 
@@ -32,16 +50,20 @@ function forColumn(column, callback) {
 	}
 }
 
-function onCellClick() {
-	if (this.classList.contains("empty")) {
-		this.classList.remove("empty");
-		this.classList.add("filled");
-	} else if (this.classList.contains("filled")) {
-		this.classList.remove("filled");
-		this.classList.add("marked");
-	} else if (this.classList.contains("marked")) {
-		this.classList.remove("marked");
-		this.classList.add("empty");
+function rotateCellContent(element, direction) {
+	let rotation = new CircularArray([ "empty", "filled", "marked" ]);
+	var notRotated = true;
+	for (let i = 0; i < rotation.length; i++) {
+		if (element.classList.contains(rotation.get(i))) {
+			notRotated = false;
+			element.classList.remove(rotation.get(i));
+			element.classList.add(rotation.get(i + direction));
+			break;
+		}
+	}
+	if (notRotated) {
+		// Not sure how it happened, but fix it.
+		element.classList.add(rotation.get(0));
 	}
 	validate();
 }
