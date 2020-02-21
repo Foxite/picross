@@ -25,6 +25,7 @@ function rotateCellContent(element, direction) {
 	}
 	if (notRotated) {
 		// Not sure how it happened, but fix it.
+		console.log("this should never appear. the classlist was " + element.classList.join(", "));
 		element.classList.add(rotation.get(0));
 	}
 	validate();
