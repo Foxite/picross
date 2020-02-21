@@ -37,9 +37,10 @@
 	color: red;
 }
 
-#puzzle .hint.crossed {
-	text-decoration: strikethrough;
-	color: gray;
+#puzzle .hint .number.crossed {
+	text-decoration: line-through;
+	color: grey;
+	opacity: 0.5;
 }
 
 /* Cells */
