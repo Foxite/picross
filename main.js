@@ -1,5 +1,5 @@
 function setup() {
-	coreSetup(5, 5, new RandomGenerator(0.4));
+	coreSetup(10, 10, new RandomGenerator(0.5));
 
 	forAllCells(function(cell) {
 		cell.onclick = function() {
