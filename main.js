@@ -36,6 +36,7 @@ function validate() {
 		item.classList.remove("crossed");
 		return 0;
 	});
+	// TODO find a way to merge this and the next code block, preferably without it becoming a mess
 	// Validate rows
 	for (let i = 0; i < puzzleHeight; i++) {
 		puzzle.rows[i + 1].cells[0].classList.remove("incorrect");
@@ -61,7 +62,7 @@ function validate() {
 			} else if (inSequence) {
 				if (spec[specI] == 0) {
 					puzzle.rows[i + 1].cells[0].getElementsByClassName("number")[specI].classList.add("crossed");
-				} else {
+				} else if (spec[specI] < 0) {
 					puzzle.rows[i + 1].cells[0].classList.add("incorrect");
 				}
 				specI++;
@@ -104,7 +105,7 @@ function validate() {
 			} else if (inSequence) {
 				if (spec[specI] == 0) {
 					puzzle.rows[0].cells[i + 1].getElementsByClassName("number")[specI].classList.add("crossed");
-				} else {
+				} else if (spec[specI] < 0) {
 					puzzle.rows[0].cells[i + 1].classList.add("incorrect");
 				}
 				specI++;
