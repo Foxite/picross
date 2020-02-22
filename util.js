@@ -13,3 +13,9 @@ class CircularArray {
 		this._array[((index % this.length) + this.length) % this.length] = item;
 	}
 }
+
+function clearNode(node) {
+	while (node.childElementCount > 0) {
+		node.removeChild(node.lastChild)
+	}
+}

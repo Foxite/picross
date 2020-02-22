@@ -60,3 +60,49 @@ class Generator {
         return spec;
     }
 }
+
+function generatePuzzle(width, height, generator) {
+    let spec = generator.generate(width, height);
+	clearNode(puzzle);
+	
+    // Top row
+	let firstRow = puzzle.insertRow(0);
+	
+	// Topleft cell
+    let topLeft = firstRow.insertCell(0);
+    topLeft.classList.add("topleft");
+
+	// Hints
+    for (let i = 0; i < width; i++) {
+        let cell = firstRow.insertCell(i + 1);
+        cell.classList.add("hint");
+        cell.classList.add("vert");
+        for (let j = 0; j < spec.cols[i].length; j++) {
+            let hint = document.createElement("div");
+            hint.classList.add("number");
+            hint.textContent = spec.cols[i][j].toString();
+        }
+    }
+
+    // Other rows
+    for (let i = 0; i < height; i++) {
+		let row = puzzle.insertRow(i + 1);
+		
+		// Hint
+        let hintCell = row.insertCell(0);
+        hintCell.classList.add("hint");
+		hintCell.classList.add("horiz");
+        for (let j = 0; j < spec.cols[i].length; j++) {
+            let hint = document.createElement("div");
+            hint.classList.add("number");
+            hint.textContent = spec.cols[i][j].toString();
+		}
+
+		// Cells
+		for (let j = 0; j < width; j++) {
+            let cell = row.insertCell(j + 1);
+            cell.classList.add("cell");
+			cell.classList.add("empty");
+		}
+    }
+}
