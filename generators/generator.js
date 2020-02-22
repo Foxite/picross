@@ -6,65 +6,67 @@
 // }
 // These jagged 2d arrays contain the spec for each row/column.
 //
-// This class defines a helper function called "getSpec" which takes a boolean[][] representing the grid, and returns the object described above.
+// This class defines a helper function called "getSpec" which takes a boolean[col][row] representing the grid, and returns the object described above.
 class Generator {
     constructor() {
         if (new.target === Generator) {
             throw new TypeError("Generator is an abstract class");
         }
-        if (this.generate === undefined) {
-            throw new TypeError("Must override method");
-        }
     }
 
     getSpec(grid) {
-        let spec = { rows: [0], cols: [0] };
-        let specI = 0;
+        let spec = { rows: [], cols: [] };
+        
         // Cols
-        for (let i = 0; i < width; i++) {
+        for (let col = 0; col < grid.length; col++) {
+            let specI = 0;
             let inSequence = false;
-            for (let j = 0; j < height; j++) {
-                if (grid[i][j]) {
+            spec.cols[col] = [ 0 ];
+            for (let cell = 0; cell < grid[col].length; cell++) {
+                if (grid[col][cell]) {
                     inSequence = true;
-                    spec.cols[specI]++;
-                }
-                else if (inSequence) {
-                    specI++;
-                    spec.cols[specI] = 0;
+                    spec.cols[col][specI]++;
+                } else if (inSequence) {
                     inSequence = false;
+                    specI++;
+                    spec.cols[col][specI] = 0;
                 }
             }
+
+            if (spec.cols[col][spec.cols[col].length - 1] == 0 && spec.cols[col].length != 1) {
+                spec.cols[col].pop();
+            }
         }
-        specI = 0;
+
         // Rows
-        for (let i = 0; i < height; i++) {
+        for (let row = 0; row < grid[0].length; row++) {
+            let specI = 0;
             let inSequence = false;
-            for (let j = 0; j < width; j++) {
-                if (grid[j][i]) {
+            spec.rows[row] = [ 0 ];
+            for (let cell = 0; cell < grid.length; cell++) {
+                if (grid[cell][row]) {
                     inSequence = true;
-                    spec.rows[specI]++;
-                }
-                else if (inSequence) {
-                    specI++;
-                    spec.rows[specI] = 0;
+                    spec.rows[row][specI]++;
+                } else if (inSequence) {
                     inSequence = false;
+                    specI++;
+                    spec.rows[row][specI] = 0;
                 }
             }
+
+            if (spec.rows[row][spec.rows[row].length - 1] == 0 && spec.rows[row].length != 1) {
+                spec.rows[row].pop();
+            }
         }
-        if (spec.rows[spec.rows.length - 1] == 0) {
-            spec.rows = spec.rows.pop();
-        }
-        if (spec.cols[spec.cols.length - 1] == 0) {
-            spec.cols = spec.cols.pop();
-        }
+
         return spec;
     }
 }
 
 function generatePuzzle(width, height, generator) {
     let spec = generator.generate(width, height);
+	console.log(spec);
 	clearNode(puzzle);
-	
     // Top row
 	let firstRow = puzzle.insertRow(0);
 	
@@ -81,6 +83,7 @@ function generatePuzzle(width, height, generator) {
             let hint = document.createElement("div");
             hint.classList.add("number");
             hint.textContent = spec.cols[i][j].toString();
+            cell.appendChild(hint);
         }
     }
 
@@ -92,10 +95,11 @@ function generatePuzzle(width, height, generator) {
         let hintCell = row.insertCell(0);
         hintCell.classList.add("hint");
 		hintCell.classList.add("horiz");
-        for (let j = 0; j < spec.cols[i].length; j++) {
+        for (let j = 0; j < spec.rows[i].length; j++) {
             let hint = document.createElement("div");
             hint.classList.add("number");
-            hint.textContent = spec.cols[i][j].toString();
+            hint.textContent = spec.rows[i][j].toString();
+            hintCell.appendChild(hint);
 		}
 
 		// Cells

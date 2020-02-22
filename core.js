@@ -2,10 +2,13 @@ var puzzleWidth = undefined;
 var puzzleHeight = undefined;
 var puzzle = undefined;
 
-function coreSetup() {
+function coreSetup(width, height, generator) {
 	puzzle = document.getElementById("puzzle");
-	puzzleWidth = puzzle.rows.length - 1;
-	puzzleHeight = puzzle.rows[0].cells.length - 1;
+	
+	puzzleWidth = width;
+	puzzleHeight = height;
+	
+	generatePuzzle(width, height, generator);
 }
 
 function forAllCells(callback) {

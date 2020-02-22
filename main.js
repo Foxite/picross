@@ -1,5 +1,5 @@
 function setup() {
-	coreSetup(); 
+	coreSetup(5, 5, new RandomGenerator(0.15));
 
 	forAllCells(function(cell) {
 		cell.onclick = function() {
@@ -10,8 +10,6 @@ function setup() {
 			return false; // prevent context menu
 		};
 	});
-
-	generatePuzzle(5, 5, new RandomGenerator(0.15));
 }
 
 function rotateCellContent(element, direction) {
