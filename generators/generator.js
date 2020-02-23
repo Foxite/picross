@@ -65,7 +65,6 @@ class Generator {
 
 function generatePuzzle(width, height, generator) {
     let spec = generator.generate(width, height);
-	console.log(spec);
 	clearNode(puzzle);
     // Top row
 	let firstRow = puzzle.insertRow(0);

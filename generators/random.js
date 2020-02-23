@@ -15,7 +15,6 @@ class RandomGenerator extends Generator {
                 grid[i][j] = Math.random() < this._probability ? true : false;
             }
         }
-        console.log(grid);
         return this.getSpec(grid);
     }
 }
