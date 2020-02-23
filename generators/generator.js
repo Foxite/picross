@@ -21,7 +21,7 @@ class Generator {
             for (let x = 0; x < (vertical ? grid : grid[0]).length; x++) {
                 let inSequence = false;
                 array[x] = [ 0 ];
-                for (let y = 0; y < grid[x].length; y++) {
+                for (let y = 0; y < (vertical ? grid[x] : grid).length; y++) {
                     if (vertical ? grid[x][y] : grid[y][x]) {
                         inSequence = true;
                         array[x][array[x].length - 1]++;
