@@ -59,12 +59,8 @@ function generatePuzzle(width, height, generator) {
         let cell = firstRow.insertCell(i + 1);
         cell.classList.add("hint");
         cell.classList.add("vert");
-        let notFirst = false;
         for (let j = 0; j < spec.cols[i].length; j++) {
-            if (notFirst) {
-                cell.appendChild(document.createTextNode(" "));
-            }
-            notFirst = true;
+            cell.appendChild(document.createTextNode(" "));
 
             let hint = document.createElement("div");
             hint.classList.add("number");
@@ -81,12 +77,9 @@ function generatePuzzle(width, height, generator) {
         let hintCell = row.insertCell(0);
         hintCell.classList.add("hint");
 		hintCell.classList.add("horiz");
-        let notFirst = false;
         for (let j = 0; j < spec.rows[i].length; j++) {
-            if (notFirst) {
-                hintCell.appendChild(document.createTextNode(" "));
-            }
-            notFirst = true;
+            hintCell.appendChild(document.createTextNode(" "));
+            
             let hint = document.createElement("div");
             hint.classList.add("number");
             hint.textContent = spec.rows[i][j].toString();
