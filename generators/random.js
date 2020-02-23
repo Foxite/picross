@@ -12,7 +12,7 @@ class RandomGenerator extends Generator {
         for (let i = 0; i < width; i++) {
             grid[i] = [];
             for (let j = 0; j < height; j++) {
-                grid[i][j] = Math.random() < this._probability ? true : false;
+                grid[i][j] = Math.random() < this._probability;
             }
         }
         return this.getSpec(grid);
