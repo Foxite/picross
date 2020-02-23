@@ -16,44 +16,29 @@ class Generator {
 
     getSpec(grid) {
         let spec = { rows: [], cols: [] };
-        
-        // Cols
-        for (let col = 0; col < grid.length; col++) {
-            let inSequence = false;
-            spec.cols[col] = [ 0 ];
-            for (let row = 0; row < grid[col].length; row++) {
-                if (grid[col][row]) {
-                    inSequence = true;
-                    spec.cols[col][spec.cols[col].length - 1]++;
-                } else if (inSequence) {
-                    inSequence = false;
-                    spec.cols[col][spec.cols[col].length] = 0;
+
+        let getSpecHalf = function(vertical, array) {
+            for (let x = 0; x < (vertical ? grid : grid[0]).length; x++) {
+                let inSequence = false;
+                array[x] = [ 0 ];
+                for (let y = 0; y < grid[x].length; y++) {
+                    if (vertical ? grid[x][y] : grid[y][x]) {
+                        inSequence = true;
+                        array[x][array[x].length - 1]++;
+                    } else if (inSequence) {
+                        inSequence = false;
+                        array[x][array[x].length] = 0;
+                    }
+                }
+    
+                if (array[x][array[x].length - 1] == 0 && array[x].length != 1) {
+                    array[x].pop();
                 }
             }
+        };
 
-            if (spec.cols[col][spec.cols[col].length - 1] == 0 && spec.cols[col].length != 1) {
-                spec.cols[col].pop();
-            }
-        }
-
-        // Rows
-        for (let row = 0; row < grid[0].length; row++) {
-            let inSequence = false;
-            spec.rows[row] = [ 0 ];
-            for (let col = 0; col < grid.length; col++) {
-                if (grid[col][row]) {
-                    inSequence = true;
-                    spec.rows[row][spec.rows[row].length - 1]++;
-                } else if (inSequence) {
-                    inSequence = false;
-                    spec.rows[row][spec.rows[row].length] = 0;
-                }
-            }
-
-            if (spec.rows[row][spec.rows[row].length - 1] == 0 && spec.rows[row].length != 1) {
-                spec.rows[row].pop();
-            }
-        }
+        getSpecHalf(true, spec.cols);
+        getSpecHalf(false, spec.rows);
 
         return spec;
     }
