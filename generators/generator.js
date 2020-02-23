@@ -19,17 +19,15 @@ class Generator {
         
         // Cols
         for (let col = 0; col < grid.length; col++) {
-            let specI = 0;
             let inSequence = false;
             spec.cols[col] = [ 0 ];
-            for (let cell = 0; cell < grid[col].length; cell++) {
-                if (grid[col][cell]) {
+            for (let row = 0; row < grid[col].length; row++) {
+                if (grid[col][row]) {
                     inSequence = true;
-                    spec.cols[col][specI]++;
+                    spec.cols[col][spec.cols[col].length - 1]++;
                 } else if (inSequence) {
                     inSequence = false;
-                    specI++;
-                    spec.cols[col][specI] = 0;
+                    spec.cols[col][spec.cols[col].length] = 0;
                 }
             }
 
@@ -40,17 +38,15 @@ class Generator {
 
         // Rows
         for (let row = 0; row < grid[0].length; row++) {
-            let specI = 0;
             let inSequence = false;
             spec.rows[row] = [ 0 ];
-            for (let cell = 0; cell < grid.length; cell++) {
-                if (grid[cell][row]) {
+            for (let col = 0; col < grid.length; col++) {
+                if (grid[col][row]) {
                     inSequence = true;
-                    spec.rows[row][specI]++;
+                    spec.rows[row][spec.rows[row].length - 1]++;
                 } else if (inSequence) {
                     inSequence = false;
-                    specI++;
-                    spec.rows[row][specI] = 0;
+                    spec.rows[row][spec.rows[row].length] = 0;
                 }
             }
 
