@@ -37,7 +37,7 @@ function validate() {
 		Array.from(hintCell.getElementsByClassName("number")).forEach(function(number) {
 			number.classList.remove("crossed");
 		});
-		let spec = hintCell.textContent.split(" ").map(function(item) {
+		let spec = hintCell.textContent.split(" ").splice(1).map(function(item) {
 			return parseInt(item);
 		});
 		let specI = 0;
