@@ -5,6 +5,7 @@
 
 #puzzle {
 	table-layout: fixed;
+	border-collapse: collapse;
 }
 
 #puzzle td {
@@ -17,12 +18,16 @@
 	width: 2em;
 	vertical-align: bottom;
 	text-align: center;
+	border-left: 1px solid #CCCCCC;
+	border-right: 1px solid #CCCCCC;
 }
 
 #puzzle .hint.horiz {
 	width: 5em;
 	vertical-align: middle;
 	text-align: right;
+	border-top: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
 }
 
 #puzzle .hint.vert .number {
@@ -44,6 +49,10 @@
 }
 
 /* Cells */
+#puzzle .cell {
+	border: 1px solid #CCCCCC;
+}
+
 #puzzle .cell.empty {
 	background-color: white;
 }
